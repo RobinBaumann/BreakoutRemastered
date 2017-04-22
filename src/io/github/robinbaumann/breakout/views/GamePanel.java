@@ -1,5 +1,6 @@
 package io.github.robinbaumann.breakout.views;
 
+import io.github.robinbaumann.breakout.Game;
 import io.github.robinbaumann.breakout.components.Ball;
 import io.github.robinbaumann.breakout.components.Racquet;
 
@@ -13,10 +14,12 @@ import java.awt.event.KeyListener;
  * Created by Robin Baumann on 4/9/17.
  */
 public class GamePanel extends JPanel {
+    private Game game;
     private Ball ball = new Ball(this);
     private Racquet racquet = new Racquet(this);
 
-    public GamePanel() {
+    public GamePanel(Game game) {
+        this.game = game;
         KeyListener keyListener = new KeyListener() {
             @Override
             public void keyTyped(KeyEvent keyEvent) {
@@ -42,6 +45,10 @@ public class GamePanel extends JPanel {
         racquet.move();
     }
 
+    public void reset() {
+
+    }
+
     @Override
     public void paint(Graphics graphics) {
         super.paint(graphics);
@@ -55,7 +62,7 @@ public class GamePanel extends JPanel {
 
     public void gameOver() {
         JOptionPane.showMessageDialog(this, "Game Over", "Game Over", JOptionPane.YES_NO_OPTION);
-        System.exit(ABORT);
+        game.stopGame();
     }
 
 

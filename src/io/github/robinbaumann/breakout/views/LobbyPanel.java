@@ -29,8 +29,6 @@ public class LobbyPanel extends JPanel implements ActionListener {
         this.setLayout(new GridBagLayout());
         this.setBorder(new EmptyBorder(10, 10, 10, 10));
         GridBagConstraints labelConst = new GridBagConstraints();
-        Dimension preferredSize = new Dimension(1280, 720);
-
         labelConst.insets = new Insets(3, 3, 3, 3);
 
         labelConst.gridx = 0;
