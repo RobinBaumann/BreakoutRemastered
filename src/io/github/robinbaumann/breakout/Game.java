@@ -52,16 +52,22 @@ public class Game  extends JFrame {
         this.validate();
         this.repaint();
         this.run = true;
-
-        while (run) {
-            gamePanel.move();
-            gamePanel.repaint();
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException iEx) {
-                iEx.printStackTrace();
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (run) {
+                    gamePanel.move();
+                    gamePanel.repaint();
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException iEx) {
+                        iEx.printStackTrace();
+                    }
+                }
             }
-        }
+        });
+        t.start();
+
     }
 
     public void stopGame() {

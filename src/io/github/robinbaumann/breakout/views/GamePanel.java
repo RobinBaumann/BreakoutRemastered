@@ -50,8 +50,8 @@ public class GamePanel extends JPanel {
     }
 
     @Override
-    public void paint(Graphics graphics) {
-        super.paint(graphics);
+    public void paintComponent(Graphics graphics) {
+        super.paintComponent(graphics);
         Graphics2D g2d = (Graphics2D) graphics;
         g2d.setColor(Color.BLACK);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,

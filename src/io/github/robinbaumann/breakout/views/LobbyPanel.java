@@ -18,7 +18,7 @@ public class LobbyPanel extends JPanel implements ActionListener {
     private JTextField userName = new JTextField("", 20);
     private JButton startButton = new JButton("Play!");
     private JButton highScoreButton = new JButton("View Best");
-    private JButton cancelButton = new JButton("Cancel");
+    private JButton cancelButton = new JButton("Create Level");
     private Game game;
 
     public LobbyPanel(Game game) {
@@ -46,7 +46,6 @@ public class LobbyPanel extends JPanel implements ActionListener {
 
     }
 
-    //TODO: Resize window for play
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         try {
