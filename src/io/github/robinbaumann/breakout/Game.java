@@ -6,12 +6,14 @@ import io.github.robinbaumann.breakout.views.LobbyPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ContainerAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  * Project: BreakoutRemastered
  * Created by Robin Baumann on 4/9/17.
  */
-public class Game  extends JFrame {
+public class Game  extends JFrame implements Runnable {
     private static final int width = 1280;
     private static final int height = 720;
     private static final String LOBBY_PANEL = "Lobby Panel";
@@ -36,6 +38,25 @@ public class Game  extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         cardLayout.show(cardPanel, LOBBY_PANEL);
+
+        KeyListener keyListener = new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent keyEvent) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent keyEvent) {
+                gamePanel.getRacquet().keyPressed(keyEvent);
+            }
+
+            @Override
+            public void keyReleased(KeyEvent keyEvent) {
+                gamePanel.getRacquet().keyReleased(keyEvent);
+            }
+        };
+        addKeyListener(keyListener);
+        setFocusable(true);
     }
 
     public static void main(String[] args) {
@@ -47,25 +68,11 @@ public class Game  extends JFrame {
     }
 
     public void playGame() {
-        // Game Loop
         cardLayout.show(cardPanel, GAME_PANEL);
         this.validate();
         this.repaint();
         this.run = true;
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (run) {
-                    gamePanel.move();
-                    gamePanel.repaint();
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException iEx) {
-                        iEx.printStackTrace();
-                    }
-                }
-            }
-        });
+        Thread t = new Thread(this);
         t.start();
 
     }
@@ -73,5 +80,22 @@ public class Game  extends JFrame {
     public void stopGame() {
         cardLayout.show(cardPanel, LOBBY_PANEL);
         this.run = false;
+    }
+
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
+    public void run() {
+        while (run) {
+            gamePanel.move();
+            gamePanel.repaint();
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException iEx) {
+                iEx.printStackTrace();
+            }
+        }
     }
 }

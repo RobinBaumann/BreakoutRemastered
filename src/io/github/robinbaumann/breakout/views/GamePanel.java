@@ -20,24 +20,6 @@ public class GamePanel extends JPanel {
 
     public GamePanel(Game game) {
         this.game = game;
-        KeyListener keyListener = new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent keyEvent) {
-
-            }
-
-            @Override
-            public void keyPressed(KeyEvent keyEvent) {
-                racquet.keyPressed(keyEvent);
-            }
-
-            @Override
-            public void keyReleased(KeyEvent keyEvent) {
-                racquet.keyReleased(keyEvent);
-            }
-        };
-        addKeyListener(keyListener);
-        setFocusable(true);
     }
 
     public void move() {
