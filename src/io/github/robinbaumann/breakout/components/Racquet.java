@@ -1,6 +1,6 @@
 package io.github.robinbaumann.breakout.components;
 
-import io.github.robinbaumann.breakout.views.GamePanel;
+import io.github.robinbaumann.breakout.views.Board;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -15,14 +15,14 @@ public class Racquet {
     private static final int HEIGHT = 10;
     private int posX = 0;
     private int dirX = 0;
-    private GamePanel gamePanel;
+    private Board board;
 
-    public Racquet(GamePanel gamePanel) {
-        this.gamePanel = gamePanel;
+    public Racquet(Board board) {
+        this.board = board;
     }
 
     public void move() {
-        if (this.posX + this.dirX > 0 && this.posX + this.dirX < gamePanel.getWidth() - WIDTH)
+        if (this.posX + this.dirX > 0 && this.posX + this.dirX < board.getWidth() - WIDTH)
             this.posX = this.posX + this.dirX;
     }
 

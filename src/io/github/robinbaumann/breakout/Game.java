@@ -1,11 +1,11 @@
 package io.github.robinbaumann.breakout;
 
-import io.github.robinbaumann.breakout.views.GamePanel;
-import io.github.robinbaumann.breakout.views.LobbyPanel;
+import io.github.robinbaumann.breakout.views.Board;
+import io.github.robinbaumann.breakout.views.Editor;
+import io.github.robinbaumann.breakout.views.Lobby;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ContainerAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -16,28 +16,32 @@ import java.awt.event.KeyListener;
 public class Game  extends JFrame implements Runnable {
     private static final int width = 1280;
     private static final int height = 720;
-    private static final String LOBBY_PANEL = "Lobby Panel";
-    private static final String GAME_PANEL = "Game Panel";
+    private static final String LOBBY = "Lobby";
+    private static final String GAME = "Game";
+    private static final String EDITOR = "Editor";
     private boolean run = false;
     private CardLayout cardLayout;
-    public JPanel cardPanel = new JPanel();
-    public LobbyPanel lobbyPanel;
-    public GamePanel gamePanel;
+    private JPanel cardPanel = new JPanel();
+    private Lobby lobby;
+    private Board board;
+    private Editor editor;
 
     public Game(){
         super("Breakout Remastered");
         cardPanel.setLayout(new CardLayout());
         cardLayout = (CardLayout) cardPanel.getLayout();
-        lobbyPanel = new LobbyPanel(this);
-        gamePanel = new GamePanel(this);
-        cardPanel.add(lobbyPanel, LOBBY_PANEL);
-        cardPanel.add(gamePanel, GAME_PANEL);
+        lobby = new Lobby(this);
+        board = new Board(this);
+        editor = new Editor(this);
+        cardPanel.add(lobby, LOBBY);
+        cardPanel.add(board, GAME);
+        cardPanel.add(editor, EDITOR);
         this.add(cardPanel);
         this.pack();
         this.setSize(width, height);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        cardLayout.show(cardPanel, LOBBY_PANEL);
+        cardLayout.show(cardPanel, LOBBY);
 
         KeyListener keyListener = new KeyListener() {
             @Override
@@ -47,12 +51,12 @@ public class Game  extends JFrame implements Runnable {
 
             @Override
             public void keyPressed(KeyEvent keyEvent) {
-                gamePanel.getRacquet().keyPressed(keyEvent);
+                board.getRacquet().keyPressed(keyEvent);
             }
 
             @Override
             public void keyReleased(KeyEvent keyEvent) {
-                gamePanel.getRacquet().keyReleased(keyEvent);
+                board.getRacquet().keyReleased(keyEvent);
             }
         };
         addKeyListener(keyListener);
@@ -67,8 +71,16 @@ public class Game  extends JFrame implements Runnable {
 
     }
 
+    public void toggleEditor() {
+        if(cardPanel.getComponent(0).equals(editor)){
+            cardLayout.show(cardPanel, LOBBY);
+        } else {
+            cardLayout.show(cardPanel, EDITOR);
+        }
+    }
+
     public void playGame() {
-        cardLayout.show(cardPanel, GAME_PANEL);
+        cardLayout.show(cardPanel, GAME);
         this.validate();
         this.repaint();
         this.run = true;
@@ -78,19 +90,15 @@ public class Game  extends JFrame implements Runnable {
     }
 
     public void stopGame() {
-        cardLayout.show(cardPanel, LOBBY_PANEL);
+        cardLayout.show(cardPanel, LOBBY);
         this.run = false;
-    }
-
-    public void keyPressed(KeyEvent e) {
-
     }
 
     @Override
     public void run() {
         while (run) {
-            gamePanel.move();
-            gamePanel.repaint();
+            board.move();
+            board.repaint();
             try {
                 Thread.sleep(10);
             } catch (InterruptedException iEx) {

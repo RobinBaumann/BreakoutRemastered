@@ -1,6 +1,6 @@
 package io.github.robinbaumann.breakout.components;
 
-import io.github.robinbaumann.breakout.views.GamePanel;
+import io.github.robinbaumann.breakout.views.Board;
 
 import java.awt.*;
 
@@ -14,24 +14,24 @@ public class Ball {
     private int posY = 0;
     private int dirX = 1; // value > 0 : move right, value < 0 : move left
     private int dirY = 1; // value > 0 : move down, value < 0 : move up
-    private GamePanel gamePanel;
+    private Board board;
 
-    public Ball(GamePanel gamePanel) {
-        this.gamePanel = gamePanel;
+    public Ball(Board board) {
+        this.board = board;
     }
 
     public void move() {
         if (this.posX + this.dirX < 0)
             this.dirX = 1;
-        if (this.posX + this.dirX > gamePanel.getWidth() - DIAMETER)
+        if (this.posX + this.dirX > board.getWidth() - DIAMETER)
             this.dirX = -1;
         if (this.posY + this.dirY < 0)
             this.dirY = 1;
-        if (this.posY + this.dirY > gamePanel.getHeight() - DIAMETER)
-            gamePanel.gameOver();
+        if (this.posY + this.dirY > board.getHeight() - DIAMETER)
+            board.gameOver();
         if (collision()){
             this.dirY = -1;
-            this.posY = gamePanel.getRacquet().getTopY() - DIAMETER;
+            this.posY = board.getRacquet().getTopY() - DIAMETER;
         }
 
         this.posX += this.dirX;
@@ -39,7 +39,7 @@ public class Ball {
     }
 
     private boolean collision() {
-        return gamePanel.getRacquet().getBounds().intersects(getBounds());
+        return board.getRacquet().getBounds().intersects(getBounds());
     }
 
     public void paint(Graphics2D g) {

@@ -13,12 +13,12 @@ import java.awt.event.KeyListener;
  * Project: BreakoutRemastered
  * Created by Robin Baumann on 4/9/17.
  */
-public class GamePanel extends JPanel {
+public class Board extends JPanel {
     private Game game;
     private Ball ball = new Ball(this);
     private Racquet racquet = new Racquet(this);
 
-    public GamePanel(Game game) {
+    public Board(Game game) {
         this.game = game;
     }
 
