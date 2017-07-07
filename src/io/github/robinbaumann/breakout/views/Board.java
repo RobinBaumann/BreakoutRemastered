@@ -41,11 +41,17 @@ public class Board extends JPanel {
         g2d.setColor(Color.BLACK);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-        ball.paint(g2d);
-        racquet.paint(g2d);
-        for (Brick b : wall.loadRandomWall()) {
-            b.paint(g2d);
+
+        g2d.drawImage(ball.getImage(), ball.getPosX(), ball.getPosY(),
+                ball.getWidth(), ball.getHeight(), this);
+        g2d.drawImage(racquet.getImage(), racquet.getPosX(), racquet.getPosY(),
+                racquet.getWidth(), racquet.getHeight(), this);
+
+        for (Brick b: wall.getBricks()) {
+            g2d.drawImage(b.getImage(), b.getPosX(), b.getPosY(),
+                    b.getWidth(), b.getHeight(), this);
         }
+
     }
 
     public void gameOver() {
@@ -53,6 +59,10 @@ public class Board extends JPanel {
         game.stopGame();
     }
 
+
+    public Ball getBall() {
+        return ball;
+    }
 
     public Racquet getRacquet() {
         return racquet;

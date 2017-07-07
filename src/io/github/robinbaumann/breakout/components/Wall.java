@@ -2,9 +2,9 @@ package io.github.robinbaumann.breakout.components;
 
 import io.github.robinbaumann.breakout.components.bricks.Brick;
 import io.github.robinbaumann.breakout.delegates.CSVDelegate;
+
 import java.util.Random;
 import java.io.File;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -16,7 +16,7 @@ public class Wall {
     private static final String FILE_LOCATION = "walls/";
 
     public Wall() {
-        bricks = new HashSet<>();
+        bricks = loadRandomWall();
     }
 
     public void add(Brick brick) {
@@ -32,22 +32,22 @@ public class Wall {
     }
 
 
+    public Set<Brick> getBricks() {
+        return bricks;
+    }
+
+
     public Set<Brick> loadRandomWall() {
 
-        try {
-            File dir = new File(FILE_LOCATION);
-            File[] files = dir.listFiles();
-            Random rand = new Random();
-            File wall = files[rand.nextInt(files.length)];
 
-            CSVDelegate csvParser = new CSVDelegate();
+        File dir = new File(FILE_LOCATION);
+        File[] files = dir.listFiles();
+        Random rand = new Random();
+        File wall = files[rand.nextInt(files.length)];
 
-            bricks = csvParser.readFromFile(wall);
+        CSVDelegate csvParser = new CSVDelegate();
 
-        } catch(NullPointerException npe){
-            System.out.println("NullPointerException:" );
-            npe.printStackTrace();
-        }
+        bricks = csvParser.readFromFile(wall);
 
         return bricks;
     }

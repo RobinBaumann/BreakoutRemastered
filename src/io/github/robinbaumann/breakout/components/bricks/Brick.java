@@ -1,22 +1,17 @@
 package io.github.robinbaumann.breakout.components.bricks;
 
+import io.github.robinbaumann.breakout.components.Sprite;
+
 import javax.swing.*;
 import java.awt.*;
-import java.util.Optional;
 
 /**
  * Project: BreakoutRemastered
  * Created by Robin Baumann on 4/10/17.
  */
-public class Brick {
-    private static final int WIDTH = 60;
-    private static final int HEIGHT = 10;
-    private int posX;
-    private int posY;
+public class Brick extends Sprite {
     private int hitAmount;
     private boolean destroyable;
-    private JLabel hitLabel = new JLabel();
-    private Color color = Color.GREEN;
 
 
     public Brick(BrickBuilder builder) {
@@ -24,21 +19,22 @@ public class Brick {
         this.posY = builder.posY;
         this.hitAmount = builder.hitAmount;
         this.destroyable = builder.destroyable;
-
-    }
-
-    public void paint(Graphics2D g) {
-        if(this.hitAmount > 1) {
-            this.color = Color.YELLOW;
+        ImageIcon ii = new ImageIcon("img/bricks/brick.png");
+        if(hitAmount > 1) {
+            ii = new ImageIcon("img/bricks/strong.png");
         }
-        if(!this.destroyable){
-            this.color = Color.RED;
+        if(!destroyable) {
+            ii = new ImageIcon("img/bricks/undestroyable.png");
         }
-        g.fillRect(this.posX, this.posY, WIDTH, HEIGHT);
+
+        this.image = ii.getImage();
+        this.width = image.getWidth(null);
+        this.height = image.getHeight(null);
+
     }
 
     public Rectangle getBounds() {
-        return new Rectangle(this.posX, this.posY, WIDTH, HEIGHT);
+        return new Rectangle(this.posX, this.posY, width, height);
     }
 
     public void decreaseHitAmount() {
