@@ -92,6 +92,7 @@ public class Game  extends JFrame implements Runnable {
     public void stopGame() {
         cardLayout.show(cardPanel, LOBBY);
         this.run = false;
+        this.board.reset();
     }
 
     @Override

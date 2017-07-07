@@ -3,22 +3,30 @@ package io.github.robinbaumann.breakout.views;
 import io.github.robinbaumann.breakout.Game;
 import io.github.robinbaumann.breakout.components.Wall;
 import io.github.robinbaumann.breakout.components.bricks.Brick;
+import io.github.robinbaumann.breakout.components.bricks.BrickBuilder;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  * Project: BreakoutRemastered
  * Created by Robin Baumann on 4/25/17.
  */
-public class Editor extends JPanel implements ActionListener{
+public class Editor extends JPanel implements ActionListener, MouseListener {
+
+    private int MAX_HITAMOUNT = 20;
 
     private Brick currentBrick;
     private Wall currentWall;
 
-    private JPanel editorBoard = new JPanel();
+    private double mouseX;
+    private double mouseY;
+
+    private JPanel editorBoard = new Board(null);
     private JPanel toolBar = new JPanel();
     private JPanel buttonPanel = new JPanel();
 
@@ -35,6 +43,12 @@ public class Editor extends JPanel implements ActionListener{
 
 
     public Editor(Game game) {
+
+        destroyable.setSelected(true);
+        initializeHitAmount();
+
+        editorBoard.setBackground(Color.WHITE);
+        editorBoard.addMouseListener(this);
 
         cancelButton.addActionListener(this);
         saveButton.addActionListener(this);
@@ -56,10 +70,55 @@ public class Editor extends JPanel implements ActionListener{
         this.add(buttonPanel, BorderLayout.SOUTH);
     }
 
+    private void initializeHitAmount() {
+        for (int i = 1; i <= MAX_HITAMOUNT; i++) {
+            hitAmount.addItem(i);
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if (actionEvent.getSource() == cancelButton) {
             game.toggleEditor();
         }
     }
+
+
+    @Override
+    public void mouseClicked(MouseEvent mouseEvent) {
+        createBrick(mouseEvent.getX(), mouseEvent.getY(), destroyable.isSelected(), (Integer) hitAmount.getSelectedItem());
+    }
+
+    private void createBrick(int x, int y, boolean dest, Integer hitAmount) {
+        currentBrick = new BrickBuilder()
+                .setDestroyable(dest)
+                .setHitAmount(hitAmount)
+                .setPosX(x)
+                .setPosY(y)
+                .build();
+        currentWall.add(currentBrick);
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent mouseEvent) {
+
+    }
+
+
 }

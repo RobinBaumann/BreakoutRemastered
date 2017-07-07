@@ -3,6 +3,8 @@ package io.github.robinbaumann.breakout.views;
 import io.github.robinbaumann.breakout.Game;
 import io.github.robinbaumann.breakout.components.Ball;
 import io.github.robinbaumann.breakout.components.Racquet;
+import io.github.robinbaumann.breakout.components.Wall;
+import io.github.robinbaumann.breakout.components.bricks.Brick;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +19,7 @@ public class Board extends JPanel {
     private Game game;
     private Ball ball = new Ball(this);
     private Racquet racquet = new Racquet(this);
+    private Wall wall = new Wall();
 
     public Board(Game game) {
         this.game = game;
@@ -40,6 +43,9 @@ public class Board extends JPanel {
                 RenderingHints.VALUE_ANTIALIAS_ON);
         ball.paint(g2d);
         racquet.paint(g2d);
+        for (Brick b : wall.loadRandomWall()) {
+            b.paint(g2d);
+        }
     }
 
     public void gameOver() {
