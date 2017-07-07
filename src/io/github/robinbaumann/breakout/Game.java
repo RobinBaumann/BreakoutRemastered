@@ -99,6 +99,7 @@ public class Game  extends JFrame implements Runnable {
     public void run() {
         while (run) {
             board.move();
+            board.checkCollision();
             board.repaint();
             try {
                 Thread.sleep(10);

@@ -37,10 +37,6 @@ public class Ball extends Sprite {
             this.dirY = 1;
         if (this.posY + this.dirY > board.getHeight() - this.height)
             board.gameOver();
-        if (board.getRacquet().collision()){
-            this.dirY = -1;
-            this.posY = board.getRacquet().getTopY() - this.height;
-        }
 
         this.posX += this.dirX;
         this.posY += this.dirY;
@@ -54,5 +50,21 @@ public class Ball extends Sprite {
 
     public Rectangle getBounds() {
         return new Rectangle(this.posX, this.posY, this.width, this.height);
+    }
+
+    public int getDirX() {
+        return dirX;
+    }
+
+    public void setDirX(int dirX) {
+        this.dirX = dirX;
+    }
+
+    public int getDirY() {
+        return dirY;
+    }
+
+    public void setDirY(int dirY) {
+        this.dirY = dirY;
     }
 }

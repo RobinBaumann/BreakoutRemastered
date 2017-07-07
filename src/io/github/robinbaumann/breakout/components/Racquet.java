@@ -51,7 +51,4 @@ public class Racquet extends Sprite {
         return this.posY;
     }
 
-    public boolean collision() {
-        return board.getBall().getBounds().intersects(getBounds());
-    }
 }

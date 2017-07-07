@@ -12,6 +12,7 @@ import java.awt.*;
 public class Brick extends Sprite {
     private int hitAmount;
     private boolean destroyable;
+    private boolean destroyed;
 
 
     public Brick(BrickBuilder builder) {
@@ -41,4 +42,19 @@ public class Brick extends Sprite {
         this.hitAmount--;
     }
 
+    public boolean isDestroyed() {
+        return destroyed;
+    }
+
+    public void setDestroyed(boolean destroyed) {
+        this.destroyed = destroyed;
+    }
+
+    public boolean isDestroyable() {
+        return destroyable;
+    }
+
+    public void setDestroyable(boolean destroyable) {
+        this.destroyable = destroyable;
+    }
 }

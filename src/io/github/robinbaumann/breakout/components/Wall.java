@@ -23,15 +23,6 @@ public class Wall {
         bricks.add(brick);
     }
 
-    public void remove(Brick brick) {
-        bricks.remove(brick);
-    }
-
-    public void removeAll() {
-        bricks.clear();
-    }
-
-
     public Set<Brick> getBricks() {
         return bricks;
     }

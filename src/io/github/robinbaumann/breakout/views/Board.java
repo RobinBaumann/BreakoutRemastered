@@ -23,6 +23,7 @@ public class Board extends JPanel {
 
     public Board(Game game) {
         this.game = game;
+        setDoubleBuffered(true);
     }
 
     public void move() {
@@ -70,5 +71,98 @@ public class Board extends JPanel {
 
     public void setRacquet(Racquet racquet) {
         this.racquet = racquet;
+    }
+
+    public void checkCollision() {
+        int destroyedBricks = 0;
+
+        if(ball.getBounds().getMaxY() > game.getHeight()) {
+            gameOver();
+        }
+
+        for (Brick b:wall.getBricks()) {
+            if(b.isDestroyed()){
+                destroyedBricks++;
+            } else if(!b.isDestroyable()) {
+                destroyedBricks++;
+            }
+        }
+
+
+        if(wall.getBricks().size() == destroyedBricks) {
+            levelFinished();
+        }
+
+        if ((ball.getBounds()).intersects(racquet.getBounds())) {
+
+            int racquetLPos = (int) racquet.getRect().getMinX();
+            int ballLPos = (int) ball.getRect().getMinX();
+
+            int first = racquetLPos + 8;
+            int second = racquetLPos + 16;
+            int third = racquetLPos + 24;
+            int fourth = racquetLPos + 32;
+
+            if (ballLPos < first) {
+                ball.setDirX(-1);
+                ball.setDirY(-1);
+            }
+
+            if (ballLPos >= first && ballLPos < second) {
+                ball.setDirX(-1);
+                ball.setDirY(-1 * ball.getDirY());
+            }
+
+            if (ballLPos >= second && ballLPos < third) {
+                ball.setDirX(0);
+                ball.setDirY(-1);
+            }
+
+            if (ballLPos >= third && ballLPos < fourth) {
+                ball.setDirX(1);
+                ball.setDirY(-1 * ball.getDirY());
+            }
+
+            if (ballLPos > fourth) {
+                ball.setDirX(1);
+                ball.setDirY(-1);
+            }
+        }
+
+        for (Brick b:wall.getBricks()) {
+            if(ball.getBounds().intersects(b.getBounds())) {
+                int ballLeft = (int) ball.getRect().getMinX();
+                int ballHeight = (int) ball.getRect().getHeight();
+                int ballWidth = (int) ball.getRect().getWidth();
+                int ballTop = (int) ball.getRect().getMinY();
+
+                Point pointRight = new Point(ballLeft + ballWidth + 1, ballTop);
+                Point pointLeft = new Point(ballLeft - 1, ballTop);
+                Point pointTop = new Point(ballLeft, ballTop - 1);
+                Point pointBottom = new Point(ballLeft, ballTop + ballHeight + 1);
+
+                if (!b.isDestroyed()) {
+                    if(b.getBounds().contains(pointRight)) {
+                        ball.setDirX(-1);
+                    } else if (b.getBounds().contains(pointLeft)) {
+                        ball.setDirX(1);
+                    }
+
+                    if(b.getBounds().contains(pointTop)) {
+                        ball.setDirY(1);
+                    } else if(b.getBounds().contains(pointBottom)) {
+                        ball.setDirY(-1);
+                    }
+
+                    b.setDestroyed(true);
+                }
+
+            }
+        }
+
+    }
+
+    private void levelFinished() {
+        JOptionPane.showMessageDialog(this, "Level Finished", "Level Finished", JOptionPane.YES_NO_OPTION);
     }
 }
