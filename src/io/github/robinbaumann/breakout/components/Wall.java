@@ -16,7 +16,6 @@ public class Wall {
     private static final String FILE_LOCATION = "walls/";
 
     public Wall() {
-        bricks = loadRandomWall();
     }
 
     public void add(Brick brick) {
@@ -28,7 +27,7 @@ public class Wall {
     }
 
 
-    public Set<Brick> loadRandomWall() {
+    public void loadRandomWall() {
 
 
         File dir = new File(FILE_LOCATION);
@@ -39,8 +38,6 @@ public class Wall {
         CSVDelegate csvParser = new CSVDelegate();
 
         bricks = csvParser.readFromFile(wall);
-
-        return bricks;
     }
 
 }

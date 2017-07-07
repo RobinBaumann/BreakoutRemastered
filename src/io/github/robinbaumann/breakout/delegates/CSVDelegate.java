@@ -1,5 +1,6 @@
 package io.github.robinbaumann.breakout.delegates;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.github.robinbaumann.breakout.components.bricks.Brick;
 import io.github.robinbaumann.breakout.components.bricks.BrickBuilder;
 
@@ -30,7 +31,7 @@ public class CSVDelegate {
                 Brick br = new BrickBuilder()
                         .setPosX(Integer.valueOf(brick[0]))
                         .setPosY(Integer.valueOf(brick[1]))
-                        .setDestroyable(brick[2].equals("true"))
+                        .setDestroyable(Boolean.parseBoolean(brick[2]))
                         .setHitAmount(Integer.valueOf(brick[3]))
                         .build();
 

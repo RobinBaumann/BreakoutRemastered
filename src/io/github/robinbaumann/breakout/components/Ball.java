@@ -42,7 +42,7 @@ public class Ball extends Sprite {
         this.posY += this.dirY;
     }
 
-    private void resetState() {
+    public void resetState() {
 
         this.posX = INIT_X;
         this.posY = INIT_Y;

@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
  * Created by Robin Baumann on 4/9/17.
  */
 public class Racquet extends Sprite {
+    private static final int INIT_X = 1280/2;
     private int dirX = 0;
     private Board board;
 
@@ -47,8 +48,7 @@ public class Racquet extends Sprite {
         return new Rectangle(this.posX, this.posY, this.width, this.height);
     }
 
-    public int getTopY() {
-        return this.posY;
+    public void resetState() {
+        this.posX = INIT_X;
     }
-
 }

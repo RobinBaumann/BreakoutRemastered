@@ -8,8 +8,6 @@ import io.github.robinbaumann.breakout.components.bricks.Brick;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 /**
  * Project: BreakoutRemastered
@@ -24,6 +22,7 @@ public class Board extends JPanel {
     public Board(Game game) {
         this.game = game;
         setDoubleBuffered(true);
+        wall.loadRandomWall();
     }
 
     public void move() {
@@ -32,7 +31,8 @@ public class Board extends JPanel {
     }
 
     public void reset() {
-
+        ball.resetState();
+        racquet.resetState();
     }
 
     @Override
@@ -60,17 +60,8 @@ public class Board extends JPanel {
         game.stopGame();
     }
 
-
-    public Ball getBall() {
-        return ball;
-    }
-
     public Racquet getRacquet() {
         return racquet;
-    }
-
-    public void setRacquet(Racquet racquet) {
-        this.racquet = racquet;
     }
 
     public void checkCollision() {
@@ -81,7 +72,7 @@ public class Board extends JPanel {
         }
 
         for (Brick b:wall.getBricks()) {
-            if(b.isDestroyed()){
+            if(b.getHitAmount()==0){
                 destroyedBricks++;
             } else if(!b.isDestroyable()) {
                 destroyedBricks++;
@@ -141,7 +132,7 @@ public class Board extends JPanel {
                 Point pointTop = new Point(ballLeft, ballTop - 1);
                 Point pointBottom = new Point(ballLeft, ballTop + ballHeight + 1);
 
-                if (!b.isDestroyed()) {
+                if (b.getHitAmount()!=0) {
                     if(b.getBounds().contains(pointRight)) {
                         ball.setDirX(-1);
                     } else if (b.getBounds().contains(pointLeft)) {
@@ -154,7 +145,9 @@ public class Board extends JPanel {
                         ball.setDirY(-1);
                     }
 
-                    b.setDestroyed(true);
+                    if(b.isDestroyable()) {
+                        b.decreaseHitAmount();
+                    }
                 }
 
             }

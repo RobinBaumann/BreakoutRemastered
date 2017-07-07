@@ -12,7 +12,6 @@ import java.awt.*;
 public class Brick extends Sprite {
     private int hitAmount;
     private boolean destroyable;
-    private boolean destroyed;
 
 
     public Brick(BrickBuilder builder) {
@@ -20,12 +19,12 @@ public class Brick extends Sprite {
         this.posY = builder.posY;
         this.hitAmount = builder.hitAmount;
         this.destroyable = builder.destroyable;
-        ImageIcon ii = new ImageIcon("img/bricks/brick.png");
+        ImageIcon ii = new ImageIcon("img/bricks/undestroyable.png");
+        if(destroyable) {
+            ii = new ImageIcon("img/bricks/brick.png");
+        }
         if(hitAmount > 1) {
             ii = new ImageIcon("img/bricks/strong.png");
-        }
-        if(!destroyable) {
-            ii = new ImageIcon("img/bricks/undestroyable.png");
         }
 
         this.image = ii.getImage();
@@ -39,22 +38,19 @@ public class Brick extends Sprite {
     }
 
     public void decreaseHitAmount() {
-        this.hitAmount--;
+
+        if(hitAmount>0) {
+            this.hitAmount--;
+        }
+
     }
 
-    public boolean isDestroyed() {
-        return destroyed;
-    }
-
-    public void setDestroyed(boolean destroyed) {
-        this.destroyed = destroyed;
-    }
 
     public boolean isDestroyable() {
         return destroyable;
     }
 
-    public void setDestroyable(boolean destroyable) {
-        this.destroyable = destroyable;
+    public int getHitAmount() {
+        return hitAmount;
     }
 }
