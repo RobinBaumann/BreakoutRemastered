@@ -29,7 +29,6 @@ public class Wall {
 
     public void loadRandomWall() {
 
-
         File dir = new File(FILE_LOCATION);
         File[] files = dir.listFiles();
         Random rand = new Random();
@@ -39,5 +38,6 @@ public class Wall {
 
         bricks = csvParser.readFromFile(wall);
     }
+
 
 }

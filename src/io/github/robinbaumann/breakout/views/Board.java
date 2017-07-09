@@ -18,6 +18,9 @@ public class Board extends JPanel {
     private Ball ball = new Ball(this);
     private Racquet racquet = new Racquet(this);
     private Wall wall = new Wall();
+    private static final int LIVES = 2;
+    private int ramainingLives = 2;
+    private int points = 0;
 
     public Board(Game game) {
         this.game = game;
@@ -33,6 +36,8 @@ public class Board extends JPanel {
     public void reset() {
         ball.resetState();
         racquet.resetState();
+        this.ramainingLives = LIVES;
+        this.points = 0;
     }
 
     @Override
@@ -43,21 +48,41 @@ public class Board extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
+
         g2d.drawImage(ball.getImage(), ball.getPosX(), ball.getPosY(),
                 ball.getWidth(), ball.getHeight(), this);
         g2d.drawImage(racquet.getImage(), racquet.getPosX(), racquet.getPosY(),
                 racquet.getWidth(), racquet.getHeight(), this);
 
         for (Brick b: wall.getBricks()) {
-            g2d.drawImage(b.getImage(), b.getPosX(), b.getPosY(),
-                    b.getWidth(), b.getHeight(), this);
+            if(b.getHitAmount()!=0){
+                g2d.drawImage(b.getImage(), b.getPosX(), b.getPosY(),
+                        b.getWidth(), b.getHeight(), this);
+            }
         }
+        paintScoreBoard(g2d);
 
     }
 
+    private void paintScoreBoard(Graphics2D g2d) {
+        g2d.setColor(Color.WHITE);
+        g2d.fillRect(0,0,200,50);
+        g2d.setColor(Color.BLACK);
+        g2d.drawRect(0,0,200,50);
+        g2d.drawString("Scoreboard:",12, 15);
+        g2d.drawString("Reached Points: "+ this.points,12, 30);
+        g2d.drawString("Remaining lives: "+ this.ramainingLives, 12, 45);
+    }
+
     public void gameOver() {
-        JOptionPane.showMessageDialog(this, "Game Over", "Game Over", JOptionPane.YES_NO_OPTION);
-        game.stopGame();
+        if(this.ramainingLives == 0) {
+            JOptionPane.showMessageDialog(this, "Game Over", "Game Over", JOptionPane.YES_NO_OPTION);
+            this.reset();
+            game.stopGame();
+        } else {
+            this.ramainingLives--;
+            this.ball.resetState();
+        }
     }
 
     public Racquet getRacquet() {
@@ -74,8 +99,10 @@ public class Board extends JPanel {
         for (Brick b:wall.getBricks()) {
             if(b.getHitAmount()==0){
                 destroyedBricks++;
+
             } else if(!b.isDestroyable()) {
                 destroyedBricks++;
+
             }
         }
 
@@ -147,6 +174,7 @@ public class Board extends JPanel {
 
                     if(b.isDestroyable()) {
                         b.decreaseHitAmount();
+                        points++;
                     }
                 }
 
@@ -157,5 +185,8 @@ public class Board extends JPanel {
 
     private void levelFinished() {
         JOptionPane.showMessageDialog(this, "Level Finished", "Level Finished", JOptionPane.YES_NO_OPTION);
+        reset();
     }
+
+
 }
