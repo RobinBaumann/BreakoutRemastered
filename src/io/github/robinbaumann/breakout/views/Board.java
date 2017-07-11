@@ -58,6 +58,8 @@ public class Board extends JPanel {
             if(b.getHitAmount()!=0){
                 g2d.drawImage(b.getImage(), b.getPosX(), b.getPosY(),
                         b.getWidth(), b.getHeight(), this);
+                b.drawHitAmount(g2d);
+
             }
         }
         paintScoreBoard(g2d);
@@ -116,34 +118,34 @@ public class Board extends JPanel {
             int racquetLPos = (int) racquet.getRect().getMinX();
             int ballLPos = (int) ball.getRect().getMinX();
 
-            int first = racquetLPos + 8;
-            int second = racquetLPos + 16;
-            int third = racquetLPos + 24;
-            int fourth = racquetLPos + 32;
+            int first = racquetLPos + 24;
+            int second = racquetLPos + 48;
+            int third = racquetLPos + 72;
+            int fourth = racquetLPos + 96;
 
             if (ballLPos < first) {
-                ball.setDirX(-1);
-                ball.setDirY(-1);
+                ball.setDirX(-2);
+                ball.setDirY(-2);
             }
 
             if (ballLPos >= first && ballLPos < second) {
-                ball.setDirX(-1);
-                ball.setDirY(-1 * ball.getDirY());
+                ball.setDirX(-2);
+                ball.setDirY(-2 * ball.getDirY());
             }
 
             if (ballLPos >= second && ballLPos < third) {
                 ball.setDirX(0);
-                ball.setDirY(-1);
+                ball.setDirY(-2);
             }
 
             if (ballLPos >= third && ballLPos < fourth) {
-                ball.setDirX(1);
-                ball.setDirY(-1 * ball.getDirY());
+                ball.setDirX(2);
+                ball.setDirY(-2 * ball.getDirY());
             }
 
             if (ballLPos > fourth) {
-                ball.setDirX(1);
-                ball.setDirY(-1);
+                ball.setDirX(2);
+                ball.setDirY(-2);
             }
         }
 
@@ -175,6 +177,7 @@ public class Board extends JPanel {
                     if(b.isDestroyable()) {
                         b.decreaseHitAmount();
                         points++;
+                        repaint();
                     }
                 }
 

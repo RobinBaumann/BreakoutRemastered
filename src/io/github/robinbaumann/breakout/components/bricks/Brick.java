@@ -53,4 +53,18 @@ public class Brick extends Sprite {
     public int getHitAmount() {
         return hitAmount;
     }
+
+    public void drawHitAmount(Graphics2D g2d) {
+        if(isDestroyable()) {
+            if(hitAmount == 1) {
+                ImageIcon ii = new ImageIcon("img/bricks/brick.png");
+                image = ii.getImage();
+            } else {
+                g2d.setColor(Color.BLACK);
+                g2d.setFont(new Font("Comic Sans MS", Font.BOLD, 12));
+                g2d.drawString(String.valueOf(hitAmount), getBounds().x+(getWidth()/2),getBounds().y+(getHeight()/2));
+            }
+        }
+
+    }
 }
