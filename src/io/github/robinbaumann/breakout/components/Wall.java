@@ -40,8 +40,15 @@ public class Wall {
         bricks = csvParser.readFromFile(wall);
     }
 
+    public int countWalls() {
+        return new File(FILE_LOCATION).listFiles().length;
+    }
 
     public void save(){
+        int num = countWalls() +1;
+        File file = new File(FILE_LOCATION+"wall"+num+".csv");
+        CSVDelegate csvDelegate = new CSVDelegate();
+        csvDelegate.saveToFile(file, bricks);
 
     }
 

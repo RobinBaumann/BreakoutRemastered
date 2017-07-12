@@ -5,6 +5,7 @@ import io.github.robinbaumann.breakout.components.bricks.Brick;
 import io.github.robinbaumann.breakout.components.bricks.BrickBuilder;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -52,5 +53,18 @@ public class CSVDelegate {
 
         return bricks;
 
+    }
+
+    public void saveToFile(File file, Set<Brick> bricks) {
+        try {
+            OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
+            for (Brick b:bricks) {
+                writer.write(b.toString());
+                writer.flush();
+            }
+            writer.close();
+        } catch(IOException ioex) {
+            ioex.printStackTrace();
+        }
     }
 }
