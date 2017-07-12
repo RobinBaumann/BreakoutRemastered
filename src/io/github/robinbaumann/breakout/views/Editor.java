@@ -21,12 +21,9 @@ public class Editor extends JPanel implements ActionListener, MouseListener {
     private int MAX_HITAMOUNT = 20;
 
     private Brick currentBrick;
-    private Wall currentWall;
+    private Wall currentWall = new Wall();
 
-    private double mouseX;
-    private double mouseY;
-
-    private JPanel editorBoard = new Board(null);
+    private Board editorBoard = new Board(null);
     private JPanel toolBar = new JPanel();
     private JPanel buttonPanel = new JPanel();
 
@@ -97,6 +94,10 @@ public class Editor extends JPanel implements ActionListener, MouseListener {
                 .setPosY(y)
                 .build();
         currentWall.add(currentBrick);
+        editorBoard.setWall(currentWall);
+        editorBoard.repaint();
+
+        System.out.printf("Created Brick: %s \n", currentBrick.toString());
 
     }
 

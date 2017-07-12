@@ -81,6 +81,7 @@ public class Game  extends JFrame implements Runnable {
 
     public void playGame() {
         cardLayout.show(cardPanel, GAME);
+        this.board.getWall().loadRandomWall();
         this.validate();
         this.repaint();
         this.run = true;

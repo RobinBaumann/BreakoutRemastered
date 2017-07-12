@@ -3,6 +3,7 @@ package io.github.robinbaumann.breakout.components;
 import io.github.robinbaumann.breakout.components.bricks.Brick;
 import io.github.robinbaumann.breakout.delegates.CSVDelegate;
 
+import java.util.HashSet;
 import java.util.Random;
 import java.io.File;
 import java.util.Set;
@@ -12,7 +13,7 @@ import java.util.Set;
  * Created by Robin Baumann on 4/25/17.
  */
 public class Wall {
-    private Set<Brick> bricks;
+    private Set<Brick> bricks = new HashSet<>();
     private static final String FILE_LOCATION = "walls/";
 
     public Wall() {

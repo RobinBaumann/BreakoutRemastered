@@ -25,7 +25,6 @@ public class Board extends JPanel {
     public Board(Game game) {
         this.game = game;
         setDoubleBuffered(true);
-        wall.loadRandomWall();
     }
 
     public void move() {
@@ -54,11 +53,13 @@ public class Board extends JPanel {
         g2d.drawImage(racquet.getImage(), racquet.getPosX(), racquet.getPosY(),
                 racquet.getWidth(), racquet.getHeight(), this);
 
-        for (Brick b: wall.getBricks()) {
-            if(b.getHitAmount()!=0){
+
+        for (Brick b : wall.getBricks()) {
+            if (b.getHitAmount() != 0) {
                 g2d.drawImage(b.getImage(), b.getPosX(), b.getPosY(),
                         b.getWidth(), b.getHeight(), this);
                 b.drawHitAmount(g2d);
+
 
             }
         }
@@ -68,16 +69,16 @@ public class Board extends JPanel {
 
     private void paintScoreBoard(Graphics2D g2d) {
         g2d.setColor(Color.WHITE);
-        g2d.fillRect(0,0,200,50);
+        g2d.fillRect(0, 0, 200, 50);
         g2d.setColor(Color.BLACK);
-        g2d.drawRect(0,0,200,50);
-        g2d.drawString("Scoreboard:",12, 15);
-        g2d.drawString("Reached Points: "+ this.points,12, 30);
-        g2d.drawString("Remaining lives: "+ this.ramainingLives, 12, 45);
+        g2d.drawRect(0, 0, 200, 50);
+        g2d.drawString("Scoreboard:", 12, 15);
+        g2d.drawString("Reached Points: " + this.points, 12, 30);
+        g2d.drawString("Remaining lives: " + this.ramainingLives, 12, 45);
     }
 
     public void gameOver() {
-        if(this.ramainingLives == 0) {
+        if (this.ramainingLives == 0) {
             JOptionPane.showMessageDialog(this, "Game Over", "Game Over", JOptionPane.YES_NO_OPTION);
             this.reset();
             game.stopGame();
@@ -94,22 +95,22 @@ public class Board extends JPanel {
     public void checkCollision() {
         int destroyedBricks = 0;
 
-        if(ball.getBounds().getMaxY() > game.getHeight()) {
+        if (ball.getBounds().getMaxY() > game.getHeight()) {
             gameOver();
         }
 
-        for (Brick b:wall.getBricks()) {
-            if(b.getHitAmount()==0){
+        for (Brick b : wall.getBricks()) {
+            if (b.getHitAmount() == 0) {
                 destroyedBricks++;
 
-            } else if(!b.isDestroyable()) {
+            } else if (!b.isDestroyable()) {
                 destroyedBricks++;
 
             }
         }
 
 
-        if(wall.getBricks().size() == destroyedBricks) {
+        if (wall.getBricks().size() == destroyedBricks) {
             levelFinished();
         }
 
@@ -149,8 +150,8 @@ public class Board extends JPanel {
             }
         }
 
-        for (Brick b:wall.getBricks()) {
-            if(ball.getBounds().intersects(b.getBounds())) {
+        for (Brick b : wall.getBricks()) {
+            if (ball.getBounds().intersects(b.getBounds())) {
                 int ballLeft = (int) ball.getRect().getMinX();
                 int ballHeight = (int) ball.getRect().getHeight();
                 int ballWidth = (int) ball.getRect().getWidth();
@@ -161,20 +162,20 @@ public class Board extends JPanel {
                 Point pointTop = new Point(ballLeft, ballTop - 1);
                 Point pointBottom = new Point(ballLeft, ballTop + ballHeight + 1);
 
-                if (b.getHitAmount()!=0) {
-                    if(b.getBounds().contains(pointRight)) {
+                if (b.getHitAmount() != 0) {
+                    if (b.getBounds().contains(pointRight)) {
                         ball.setDirX(-1);
                     } else if (b.getBounds().contains(pointLeft)) {
                         ball.setDirX(1);
                     }
 
-                    if(b.getBounds().contains(pointTop)) {
+                    if (b.getBounds().contains(pointTop)) {
                         ball.setDirY(1);
-                    } else if(b.getBounds().contains(pointBottom)) {
+                    } else if (b.getBounds().contains(pointBottom)) {
                         ball.setDirY(-1);
                     }
 
-                    if(b.isDestroyable()) {
+                    if (b.isDestroyable()) {
                         b.decreaseHitAmount();
                         points++;
                         repaint();
@@ -189,6 +190,16 @@ public class Board extends JPanel {
     private void levelFinished() {
         JOptionPane.showMessageDialog(this, "Level Finished", "Level Finished", JOptionPane.YES_NO_OPTION);
         reset();
+    }
+
+
+    public Wall getWall() {
+        return wall;
+    }
+
+
+    public void setWall(Wall wall) {
+        this.wall = wall;
     }
 
 

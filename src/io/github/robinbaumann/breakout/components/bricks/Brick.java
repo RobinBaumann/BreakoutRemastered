@@ -67,4 +67,14 @@ public class Brick extends Sprite {
         }
 
     }
+
+    @Override
+    public String toString() {
+        return "Brick{" +
+                "posX=" + posX +
+                ", posY=" + posY +
+                ", hitAmount=" + hitAmount +
+                ", destroyable=" + destroyable +
+                '}';
+    }
 }
