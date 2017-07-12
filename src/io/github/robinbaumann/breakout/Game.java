@@ -72,14 +72,14 @@ public class Game  extends JFrame implements Runnable {
     }
 
     public void toggleEditor() {
-        if(cardPanel.getComponent(0).equals(editor)){
+        if(editor.isVisible()) {
             cardLayout.show(cardPanel, LOBBY);
         } else {
             cardLayout.show(cardPanel, EDITOR);
         }
     }
 
-    public void playGame() {
+    public void play() {
         cardLayout.show(cardPanel, GAME);
         this.board.getWall().loadRandomWall();
         this.validate();
@@ -90,7 +90,11 @@ public class Game  extends JFrame implements Runnable {
 
     }
 
-    public void stopGame() {
+    public void test() {
+        System.out.println("Button clicked.");
+    }
+
+    public void stop() {
         cardLayout.show(cardPanel, LOBBY);
         this.run = false;
         this.board.reset();

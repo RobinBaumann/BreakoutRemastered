@@ -51,7 +51,7 @@ public class Lobby extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent actionEvent) {
         try {
             if(actionEvent.getSource() == this.startButton) {
-                this.game.playGame();
+                this.game.play();
             } else if(actionEvent.getSource() == this.editorButton) {
                 this.game.toggleEditor();
             }

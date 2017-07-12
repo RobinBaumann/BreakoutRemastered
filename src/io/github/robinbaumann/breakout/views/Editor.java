@@ -76,7 +76,12 @@ public class Editor extends JPanel implements ActionListener, MouseListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if (actionEvent.getSource() == cancelButton) {
+            this.game.toggleEditor();
+        } else if (actionEvent.getSource() == saveButton) {
+            currentWall.save();
             game.toggleEditor();
+        } else if (actionEvent.getSource() == tryButton) {
+            game.test();
         }
     }
 

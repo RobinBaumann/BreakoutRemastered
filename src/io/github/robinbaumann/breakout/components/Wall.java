@@ -41,4 +41,8 @@ public class Wall {
     }
 
 
+    public void save(){
+
+    }
+
 }

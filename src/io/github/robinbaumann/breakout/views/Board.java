@@ -81,7 +81,7 @@ public class Board extends JPanel {
         if (this.ramainingLives == 0) {
             JOptionPane.showMessageDialog(this, "Game Over", "Game Over", JOptionPane.YES_NO_OPTION);
             this.reset();
-            game.stopGame();
+            game.stop();
         } else {
             this.ramainingLives--;
             this.ball.resetState();
