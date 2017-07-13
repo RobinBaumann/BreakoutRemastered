@@ -13,7 +13,7 @@ import java.awt.*;
  * Project: BreakoutRemastered
  * Created by Robin Baumann on 4/9/17.
  */
-public class Board extends JPanel {
+public class    Board extends JPanel {
     private Game game;
     private Ball ball = new Ball(this);
     private Racquet racquet = new Racquet(this);
@@ -188,8 +188,13 @@ public class Board extends JPanel {
     }
 
     private void levelFinished() {
-        JOptionPane.showMessageDialog(this, "Level Finished", "Level Finished", JOptionPane.YES_NO_OPTION);
-        reset();
+        int continueOption = JOptionPane.showConfirmDialog(this, "Do you want to play another Level?", "Level Finished", JOptionPane.YES_NO_OPTION);
+        if(continueOption == 0) {
+            reset();
+        } else {
+            reset();
+            game.stop();
+        }
     }
 
 
