@@ -21,6 +21,7 @@ public class    Board extends JPanel {
     private static final int LIVES = 2;
     private int ramainingLives = 2;
     private int points = 0;
+    private int currentLevelNr = 0;
 
     public Board(Game game) {
         this.game = game;
@@ -79,7 +80,7 @@ public class    Board extends JPanel {
 
     public void gameOver() {
         if (this.ramainingLives == 0) {
-            JOptionPane.showMessageDialog(this, "Game Over", "Game Over", JOptionPane.YES_NO_OPTION);
+            JOptionPane.showMessageDialog(this, "Game Over", "Game Over", JOptionPane.INFORMATION_MESSAGE);
             this.reset();
             game.stop();
         } else {
@@ -188,12 +189,14 @@ public class    Board extends JPanel {
     }
 
     private void levelFinished() {
+        currentLevelNr++;
         int continueOption = JOptionPane.showConfirmDialog(this, "Do you want to play another Level?", "Level Finished", JOptionPane.YES_NO_OPTION);
         if(continueOption == 0) {
             reset();
         } else {
             reset();
             game.stop();
+            game.setHighscore(currentLevelNr);
         }
     }
 

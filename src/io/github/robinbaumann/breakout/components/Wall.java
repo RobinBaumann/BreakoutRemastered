@@ -1,7 +1,7 @@
 package io.github.robinbaumann.breakout.components;
 
 import io.github.robinbaumann.breakout.components.bricks.Brick;
-import io.github.robinbaumann.breakout.delegates.CSVDelegate;
+import io.github.robinbaumann.breakout.delegates.FileAccessDelegate;
 
 import java.util.HashSet;
 import java.util.Random;
@@ -14,7 +14,7 @@ import java.util.Set;
  */
 public class Wall {
     private Set<Brick> bricks = new HashSet<>();
-    private static final String FILE_LOCATION = "walls/";
+    private static final String FILE_LOCATION = "data/walls/";
 
     public Wall() {
     }
@@ -35,7 +35,7 @@ public class Wall {
         Random rand = new Random();
         File wall = files[rand.nextInt(files.length)];
 
-        CSVDelegate csvParser = new CSVDelegate();
+        FileAccessDelegate csvParser = new FileAccessDelegate();
 
         bricks = csvParser.readFromFile(wall);
     }
@@ -47,8 +47,8 @@ public class Wall {
     public void save(){
         int num = countWalls() +1;
         File file = new File(FILE_LOCATION+"wall"+num+".csv");
-        CSVDelegate csvDelegate = new CSVDelegate();
-        csvDelegate.saveToFile(file, bricks);
+        FileAccessDelegate fileAccessDelegate = new FileAccessDelegate();
+        fileAccessDelegate.saveToFile(file, bricks);
 
     }
 

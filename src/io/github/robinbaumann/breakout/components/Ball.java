@@ -21,7 +21,7 @@ public class Ball extends Sprite {
 
         resetState();
 
-        ImageIcon ii = new ImageIcon("img/ball/ball.png");
+        ImageIcon ii = new ImageIcon("data/img/ball/ball.png");
         this.image = ii.getImage();
 
         this.width = image.getWidth(null);

@@ -19,12 +19,12 @@ public class Brick extends Sprite {
         this.posY = builder.posY;
         this.hitAmount = builder.hitAmount;
         this.destroyable = builder.destroyable;
-        ImageIcon ii = new ImageIcon("img/bricks/brick.png");
+        ImageIcon ii = new ImageIcon("data/img/bricks/brick.png");
         if(hitAmount > 1) {
-            ii = new ImageIcon("img/bricks/strong.png");
+            ii = new ImageIcon("data/img/bricks/strong.png");
         }
         if(!destroyable) {
-            ii = new ImageIcon("img/bricks/undestroyable.png");
+            ii = new ImageIcon("data/img/bricks/undestroyable.png");
         }
 
         this.image = ii.getImage();
@@ -57,7 +57,7 @@ public class Brick extends Sprite {
     public void drawHitAmount(Graphics2D g2d) {
         if(isDestroyable()) {
             if(hitAmount == 1) {
-                ImageIcon ii = new ImageIcon("img/bricks/brick.png");
+                ImageIcon ii = new ImageIcon("data/img/bricks/brick.png");
                 image = ii.getImage();
             } else {
                 g2d.setColor(Color.BLACK);

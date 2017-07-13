@@ -1,5 +1,6 @@
 package io.github.robinbaumann.breakout;
 
+import io.github.robinbaumann.breakout.delegates.FileAccessDelegate;
 import io.github.robinbaumann.breakout.views.Board;
 import io.github.robinbaumann.breakout.views.Editor;
 import io.github.robinbaumann.breakout.views.Lobby;
@@ -25,6 +26,7 @@ public class Game  extends JFrame implements Runnable {
     private Lobby lobby;
     private Board board;
     private Editor editor;
+    private int highscore;
 
     public Game(){
         super("Breakout Remastered");
@@ -42,6 +44,8 @@ public class Game  extends JFrame implements Runnable {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         cardLayout.show(cardPanel, LOBBY);
+
+        this.highscore = FileAccessDelegate.readHighscore();
 
         KeyListener keyListener = new KeyListener() {
             @Override
@@ -112,5 +116,14 @@ public class Game  extends JFrame implements Runnable {
                 iEx.printStackTrace();
             }
         }
+    }
+
+    public int getHighscore() {
+        return highscore;
+    }
+
+    public void setHighscore(int value) {
+        this.highscore = (value > highscore) ? value : highscore;
+        FileAccessDelegate.writeHighscore(highscore);
     }
 }

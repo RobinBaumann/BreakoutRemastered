@@ -20,7 +20,7 @@ public class Racquet extends Sprite {
         this.posY = 650;
         this.posX = 1280/2;
 
-        ImageIcon ii = new ImageIcon("img/racquet/racquet.png");
+        ImageIcon ii = new ImageIcon("data/img/racquet/racquet.png");
         this.image = ii.getImage();
 
         this.width = image.getWidth(null);

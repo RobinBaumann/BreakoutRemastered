@@ -4,7 +4,9 @@ import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.github.robinbaumann.breakout.components.bricks.Brick;
 import io.github.robinbaumann.breakout.components.bricks.BrickBuilder;
 
+import javax.print.DocFlavor;
 import java.io.*;
+import java.lang.management.BufferPoolMXBean;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,19 +15,20 @@ import java.util.Set;
  * Project: BreakoutRemastered
  * Created by Robin Baumann on 7/7/17.
  */
-public class CSVDelegate {
+public class FileAccessDelegate {
 
     private Set<Brick> bricks = new HashSet<>();
     private BufferedReader br = null;
-    private String line = "";
+    private static String LINE = "";
     private static final String SEPARATOR = ",";
+    private static final String HIGHSCORE_FILE = "data/highscore/highscore";
 
     public Set<Brick> readFromFile(File file) {
         try {
             br = new BufferedReader(new FileReader(file));
-            while ((line = br.readLine()) != null) {
+            while ((LINE = br.readLine()) != null) {
 
-                String[] brick = line.split(SEPARATOR);
+                String[] brick = LINE.split(SEPARATOR);
                 System.out.printf("Brick: X=%s, Y=%s, DESTROYABLE=%s, HIT_AMOUNT=%s \n",
                         brick[0], brick[1], brick[2], brick[3]);
 
@@ -62,6 +65,32 @@ public class CSVDelegate {
                 writer.write(b.toString());
                 writer.flush();
             }
+            writer.close();
+        } catch(IOException ioex) {
+            ioex.printStackTrace();
+        }
+    }
+
+    public static int readHighscore() {
+        int highscore = 0;
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(HIGHSCORE_FILE));
+            while ((LINE = br.readLine()) != null) {
+                highscore = Integer.valueOf(LINE);
+            }
+
+        } catch(IOException ioex) {
+            ioex.printStackTrace();
+        }
+
+        return highscore;
+    }
+
+    public static void writeHighscore(int highscore) {
+        try {
+            OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(HIGHSCORE_FILE, false));
+            writer.write(String.valueOf(highscore));
             writer.close();
         } catch(IOException ioex) {
             ioex.printStackTrace();
