@@ -31,10 +31,6 @@ public class Wall implements Cloneable {
         this.bricks = bricks;
     }
 
-    public void loadWallFromFileLocation(String fileLocation) {
-        File file = new File(fileLocation);
-        bricks = FileAccessDelegate.readFromFile(file);
-    }
 
     public void loadRandomWall() {
 
@@ -60,5 +56,4 @@ public class Wall implements Cloneable {
     public Wall clone() throws CloneNotSupportedException {
         return (Wall)super.clone();
     }
-
 }

@@ -99,7 +99,6 @@ public class Game  extends JFrame implements Runnable {
     }
 
     public void test(Wall wall) {
-        System.out.println("wall: " + wall.toString());
         try {
             this.testWall = wall.clone();
         } catch(CloneNotSupportedException ex) {
@@ -115,11 +114,11 @@ public class Game  extends JFrame implements Runnable {
     }
 
     public void stopTest() {
-        System.out.println("testWall: "+testWall.toString());
         cardLayout.show(cardPanel, EDITOR);
         this.testRun = false;
         this.board.reset();
         editor.repaintTestWall();
+        editor.repaint();
     }
 
     public void stop() {
@@ -153,9 +152,5 @@ public class Game  extends JFrame implements Runnable {
 
     public boolean isTestRun() {
         return testRun;
-    }
-
-    public void setTestRun(boolean testRun) {
-        this.testRun = testRun;
     }
 }

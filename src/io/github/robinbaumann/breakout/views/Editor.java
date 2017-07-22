@@ -141,11 +141,11 @@ public class Editor extends JPanel implements ActionListener, MouseListener {
 
     public void repaintTestWall() {
         this.currentWall.setBricks(FileAccessDelegate.readFromFile(tempFile));
-        System.out.println(tempFile.getAbsolutePath());
         try {
             Files.deleteIfExists(tempFile.toPath());
         } catch(IOException ioEx) {
             ioEx.printStackTrace();
         }
     }
+
 }
