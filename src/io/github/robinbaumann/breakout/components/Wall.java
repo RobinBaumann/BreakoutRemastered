@@ -37,6 +37,7 @@ public class Wall implements Cloneable {
         File dir = new File(FILE_LOCATION);
         File[] files = dir.listFiles();
         Random rand = new Random();
+        
         File wall = files[rand.nextInt(files.length)];
 
         bricks = FileAccessDelegate.readFromFile(wall);

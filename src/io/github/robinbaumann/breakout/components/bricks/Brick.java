@@ -14,7 +14,7 @@ public class Brick extends Sprite {
     private boolean destroyable;
 
 
-    public Brick(BrickBuilder builder) {
+    Brick(BrickBuilder builder) {
         this.posX = builder.posX;
         this.posY = builder.posY;
         this.hitAmount = builder.hitAmount;

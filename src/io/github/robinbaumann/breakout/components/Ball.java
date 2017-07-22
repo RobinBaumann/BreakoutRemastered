@@ -52,10 +52,6 @@ public class Ball extends Sprite {
         return new Rectangle(this.posX, this.posY, this.width, this.height);
     }
 
-    public int getDirX() {
-        return dirX;
-    }
-
     public void setDirX(int dirX) {
         this.dirX = dirX;
     }

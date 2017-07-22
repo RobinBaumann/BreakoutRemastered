@@ -147,5 +147,4 @@ public class Editor extends JPanel implements ActionListener, MouseListener {
             ioEx.printStackTrace();
         }
     }
-
 }

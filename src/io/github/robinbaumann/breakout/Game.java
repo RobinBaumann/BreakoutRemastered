@@ -28,11 +28,10 @@ public class Game  extends JFrame implements Runnable {
     private Lobby lobby;
     private Board board;
     private Editor editor;
-    private Wall testWall;
 
     private int highscore;
 
-    public Game(){
+    Game(){
         super("Breakout Remastered");
         cardPanel.setLayout(new CardLayout());
         cardLayout = (CardLayout) cardPanel.getLayout();
@@ -99,11 +98,6 @@ public class Game  extends JFrame implements Runnable {
     }
 
     public void test(Wall wall) {
-        try {
-            this.testWall = wall.clone();
-        } catch(CloneNotSupportedException ex) {
-            ex.printStackTrace();
-        }
         this.board.setWall(wall);
         cardLayout.show(cardPanel, GAME);
         this.validate();

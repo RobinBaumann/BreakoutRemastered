@@ -5,8 +5,6 @@ package io.github.robinbaumann.breakout.components.bricks;
  * Created by Robin Baumann on 4/10/17.
  */
 public class BrickBuilder {
-    static final int WIDTH = 60;
-    static final int HEIGHT = 10;
     int posX;
     int posY;
     int hitAmount;
