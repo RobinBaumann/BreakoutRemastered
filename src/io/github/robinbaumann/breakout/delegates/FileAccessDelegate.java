@@ -17,13 +17,13 @@ import java.util.Set;
  */
 public class FileAccessDelegate {
 
-    private Set<Brick> bricks = new HashSet<>();
-    private BufferedReader br = null;
+    private static Set<Brick> bricks = new HashSet<>();
+    private static BufferedReader br = null;
     private static String LINE = "";
     private static final String SEPARATOR = ",";
     private static final String HIGHSCORE_FILE = "data/highscore/highscore";
 
-    public Set<Brick> readFromFile(File file) {
+    public static Set<Brick> readFromFile(File file) {
         try {
             br = new BufferedReader(new FileReader(file));
             while ((LINE = br.readLine()) != null) {
@@ -58,7 +58,7 @@ public class FileAccessDelegate {
 
     }
 
-    public void saveToFile(File file, Set<Brick> bricks) {
+    public static void saveToFile(File file, Set<Brick> bricks) {
         try {
             OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
             for (Brick b:bricks) {
@@ -96,4 +96,6 @@ public class FileAccessDelegate {
             ioex.printStackTrace();
         }
     }
+
+
 }

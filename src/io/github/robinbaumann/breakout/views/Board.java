@@ -80,9 +80,13 @@ public class    Board extends JPanel {
 
     public void gameOver() {
         if (this.ramainingLives == 0) {
-            JOptionPane.showMessageDialog(this, "Game Over", "Game Over", JOptionPane.INFORMATION_MESSAGE);
-            this.reset();
-            game.stop();
+            if(game.isTestRun()) {
+                game.stopTest();
+            } else {
+                JOptionPane.showMessageDialog(this, "Game Over", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                this.reset();
+                game.stop();
+            }
         } else {
             this.ramainingLives--;
             this.ball.resetState();
@@ -190,13 +194,18 @@ public class    Board extends JPanel {
 
     private void levelFinished() {
         currentLevelNr++;
-        int continueOption = JOptionPane.showConfirmDialog(this, "Do you want to play another Level?", "Level Finished", JOptionPane.YES_NO_OPTION);
-        if(continueOption == 0) {
-            reset();
+        if(game.isTestRun()){
+            game.stopTest();
         } else {
-            reset();
-            game.stop();
-            game.setHighscore(currentLevelNr);
+
+            int continueOption = JOptionPane.showConfirmDialog(this, "Do you want to play another Level?", "Level Finished", JOptionPane.YES_NO_OPTION);
+            if(continueOption == 0) {
+                reset();
+            } else {
+                reset();
+                game.stop();
+                game.setHighscore(currentLevelNr);
+            }
         }
     }
 

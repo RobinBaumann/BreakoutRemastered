@@ -12,7 +12,7 @@ import java.util.Set;
  * Project: BreakoutRemastered
  * Created by Robin Baumann on 4/25/17.
  */
-public class Wall {
+public class Wall implements Cloneable {
     private Set<Brick> bricks = new HashSet<>();
     private static final String FILE_LOCATION = "data/walls/";
 
@@ -27,6 +27,14 @@ public class Wall {
         return bricks;
     }
 
+    public void setBricks(Set<Brick> bricks) {
+        this.bricks = bricks;
+    }
+
+    public void loadWallFromFileLocation(String fileLocation) {
+        File file = new File(fileLocation);
+        bricks = FileAccessDelegate.readFromFile(file);
+    }
 
     public void loadRandomWall() {
 
@@ -35,9 +43,7 @@ public class Wall {
         Random rand = new Random();
         File wall = files[rand.nextInt(files.length)];
 
-        FileAccessDelegate csvParser = new FileAccessDelegate();
-
-        bricks = csvParser.readFromFile(wall);
+        bricks = FileAccessDelegate.readFromFile(wall);
     }
 
     public int countWalls() {
@@ -47,9 +53,12 @@ public class Wall {
     public void save(){
         int num = countWalls() +1;
         File file = new File(FILE_LOCATION+"wall"+num+".csv");
-        FileAccessDelegate fileAccessDelegate = new FileAccessDelegate();
-        fileAccessDelegate.saveToFile(file, bricks);
+        FileAccessDelegate.saveToFile(file, bricks);
 
+    }
+
+    public Wall clone() throws CloneNotSupportedException {
+        return (Wall)super.clone();
     }
 
 }

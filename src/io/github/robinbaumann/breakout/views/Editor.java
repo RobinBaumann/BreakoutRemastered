@@ -4,6 +4,7 @@ import io.github.robinbaumann.breakout.Game;
 import io.github.robinbaumann.breakout.components.Wall;
 import io.github.robinbaumann.breakout.components.bricks.Brick;
 import io.github.robinbaumann.breakout.components.bricks.BrickBuilder;
+import io.github.robinbaumann.breakout.delegates.FileAccessDelegate;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 /**
  * Project: BreakoutRemastered
@@ -35,6 +39,8 @@ public class Editor extends JPanel implements ActionListener, MouseListener {
     private JButton cancelButton = new JButton("Cancel");
     private JButton saveButton = new JButton("Save");
     private JButton tryButton = new JButton("Try it!");
+
+    private File tempFile;
 
     private Game game;
 
@@ -81,7 +87,13 @@ public class Editor extends JPanel implements ActionListener, MouseListener {
             currentWall.save();
             game.toggleEditor();
         } else if (actionEvent.getSource() == tryButton) {
-            game.test();
+            try {
+                tempFile = File.createTempFile("tempWall", ".csv");
+            } catch(IOException ioex) {
+                ioex.printStackTrace();
+            }
+            FileAccessDelegate.saveToFile(tempFile, currentWall.getBricks());
+            game.test(currentWall);
         }
     }
 
@@ -127,4 +139,13 @@ public class Editor extends JPanel implements ActionListener, MouseListener {
     }
 
 
+    public void repaintTestWall() {
+        this.currentWall.setBricks(FileAccessDelegate.readFromFile(tempFile));
+        System.out.println(tempFile.getAbsolutePath());
+        try {
+            Files.deleteIfExists(tempFile.toPath());
+        } catch(IOException ioEx) {
+            ioEx.printStackTrace();
+        }
+    }
 }

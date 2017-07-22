@@ -1,5 +1,6 @@
 package io.github.robinbaumann.breakout;
 
+import io.github.robinbaumann.breakout.components.Wall;
 import io.github.robinbaumann.breakout.delegates.FileAccessDelegate;
 import io.github.robinbaumann.breakout.views.Board;
 import io.github.robinbaumann.breakout.views.Editor;
@@ -21,11 +22,14 @@ public class Game  extends JFrame implements Runnable {
     private static final String GAME = "Game";
     private static final String EDITOR = "Editor";
     private boolean run = false;
+    private boolean testRun = false;
     private CardLayout cardLayout;
     private JPanel cardPanel = new JPanel();
     private Lobby lobby;
     private Board board;
     private Editor editor;
+    private Wall testWall;
+
     private int highscore;
 
     public Game(){
@@ -94,8 +98,28 @@ public class Game  extends JFrame implements Runnable {
 
     }
 
-    public void test() {
-        System.out.println("Button clicked.");
+    public void test(Wall wall) {
+        System.out.println("wall: " + wall.toString());
+        try {
+            this.testWall = wall.clone();
+        } catch(CloneNotSupportedException ex) {
+            ex.printStackTrace();
+        }
+        this.board.setWall(wall);
+        cardLayout.show(cardPanel, GAME);
+        this.validate();
+        this.repaint();
+        this.testRun = true;
+        Thread t = new Thread(this);
+        t.start();
+    }
+
+    public void stopTest() {
+        System.out.println("testWall: "+testWall.toString());
+        cardLayout.show(cardPanel, EDITOR);
+        this.testRun = false;
+        this.board.reset();
+        editor.repaintTestWall();
     }
 
     public void stop() {
@@ -106,7 +130,7 @@ public class Game  extends JFrame implements Runnable {
 
     @Override
     public void run() {
-        while (run) {
+        while (run || testRun) {
             board.move();
             board.checkCollision();
             board.repaint();
@@ -125,5 +149,13 @@ public class Game  extends JFrame implements Runnable {
     public void setHighscore(int value) {
         this.highscore = (value > highscore) ? value : highscore;
         FileAccessDelegate.writeHighscore(highscore);
+    }
+
+    public boolean isTestRun() {
+        return testRun;
+    }
+
+    public void setTestRun(boolean testRun) {
+        this.testRun = testRun;
     }
 }
