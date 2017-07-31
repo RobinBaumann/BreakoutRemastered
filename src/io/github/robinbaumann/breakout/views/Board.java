@@ -130,28 +130,28 @@ public class    Board extends JPanel {
             int fourth = racquetLPos + 96;
 
             if (ballLPos < first) {
-                ball.setDirX(-2);
-                ball.setDirY(-2);
+                ball.setDirX(-1);
+                ball.setDirY(-1);
             }
 
             if (ballLPos >= first && ballLPos < second) {
-                ball.setDirX(-2);
-                ball.setDirY(-2 * ball.getDirY());
+                ball.setDirX(-1);
+                ball.setDirY(-1 * ball.getDirY());
             }
 
             if (ballLPos >= second && ballLPos < third) {
                 ball.setDirX(0);
-                ball.setDirY(-2);
+                ball.setDirY(-1);
             }
 
             if (ballLPos >= third && ballLPos < fourth) {
-                ball.setDirX(2);
-                ball.setDirY(-2 * ball.getDirY());
+                ball.setDirX(1);
+                ball.setDirY(-1 * ball.getDirY());
             }
 
             if (ballLPos > fourth) {
-                ball.setDirX(2);
-                ball.setDirY(-2);
+                ball.setDirX(1);
+                ball.setDirY(-1);
             }
         }
 
